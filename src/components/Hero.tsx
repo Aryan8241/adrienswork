@@ -21,9 +21,9 @@ const Hero = () => {
             <img 
               src={aryanProfile} 
               alt="Aryan Dasgupta - Electronics Engineer"
-              className="w-32 h-32 rounded-full border-4 border-primary/30 shadow-2xl animate-pulse-glow"
+              className="w-48 h-48 object-cover rounded-2xl border-4 border-primary/30 shadow-2xl animate-pulse-glow"
             />
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 animate-pulse" />
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/20 to-accent/20 animate-pulse" />
           </div>
         </div>
 

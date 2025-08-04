@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
+import emailjs from '@emailjs/browser';
+import { useState } from 'react';
 import { 
   Mail, 
   MapPin, 
@@ -10,10 +13,88 @@ import {
   Linkedin, 
   Github, 
   Send,
-  CheckCircle
+  CheckCircle,
+  Loader2
 } from "lucide-react";
 
 const Contact = () => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  // EmailJS configuration
+  const EMAILJS_SERVICE_ID = 'service_lhpr5ul';
+  const EMAILJS_PUBLIC_KEY = 'yqwQTDVGw4k1s5I2C';
+  const EMAILJS_TEMPLATE_ID = 'template_contact'; // You'll need to create this template in EmailJS
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Initialize EmailJS with your public key
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+
+      // Send email using EmailJS
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_email: 'aryandasgupta07feb@gmail.com'
+        }
+      );
+
+      toast({
+        title: "Message Sent Successfully!",
+        description: "Thank you for reaching out. I'll get back to you within 24 hours.",
+      });
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      toast({
+        title: "Message Failed",
+        description: "There was an error sending your message. Please try again or contact me directly.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   const contactInfo = [
     {
       icon: Mail,
@@ -126,7 +207,7 @@ const Contact = () => {
 
           {/* Contact Form */}
           <Card className="card-gradient p-8 hover-scale">
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <h3 className="text-2xl font-heading font-bold text-foreground mb-2">Send a Message</h3>
                 <p className="text-muted-foreground">Let's discuss your project requirements</p>
@@ -139,8 +220,12 @@ const Contact = () => {
                   </label>
                   <Input 
                     id="name" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     placeholder="Your full name"
                     className="bg-background/50 border-border focus:border-primary"
+                    required
                   />
                 </div>
                 <div>
@@ -149,9 +234,13 @@ const Contact = () => {
                   </label>
                   <Input 
                     id="email" 
+                    name="email"
                     type="email" 
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="your.email@domain.com"
                     className="bg-background/50 border-border focus:border-primary"
+                    required
                   />
                 </div>
               </div>
@@ -162,8 +251,12 @@ const Contact = () => {
                 </label>
                 <Input 
                   id="subject" 
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
                   placeholder="Project consultation, collaboration, etc."
                   className="bg-background/50 border-border focus:border-primary"
+                  required
                 />
               </div>
 
@@ -173,9 +266,13 @@ const Contact = () => {
                 </label>
                 <Textarea 
                   id="message" 
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   placeholder="Tell me about your project, requirements, timeline, and how I can help..."
                   rows={6}
                   className="bg-background/50 border-border focus:border-primary resize-none"
+                  required
                 />
               </div>
 
@@ -184,9 +281,24 @@ const Contact = () => {
                 <span>All communications are confidential and secure</span>
               </div>
 
-              <Button variant="hero" size="lg" className="w-full group">
-                <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                Send Message
+              <Button 
+                variant="hero" 
+                size="lg" 
+                className="w-full group" 
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    Send Message
+                  </>
+                )}
               </Button>
             </form>
           </Card>
