@@ -2,41 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Aryan Dasgupta Portfolio Design System - Purple Tech Theme */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base Colors - Purple Tech Theme */
+    --background: 260 30% 8%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 260 25% 12%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 260 25% 12%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary Purple Palette */
+    --primary: 271 91% 65%;
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 271 91% 75%;
+    
+    /* Secondary and Accent Colors */
+    --secondary: 260 20% 20%;
+    --secondary-foreground: 0 0% 90%;
+    
+    --accent: 198 93% 60%;
+    --accent-foreground: 260 30% 8%;
+    
+    /* Muted Colors */
+    --muted: 260 15% 18%;
+    --muted-foreground: 0 0% 65%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Status Colors */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* UI Elements */
+    --border: 260 20% 25%;
+    --input: 260 20% 18%;
+    --ring: 271 91% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    /* Design System Extensions */
+    --radius: 0.75rem;
+    
+    /* Purple Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(271 91% 65%), hsl(198 93% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(260 30% 8%) 0%, hsl(271 50% 15%) 50%, hsl(271 91% 25%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(260 25% 12%) 0%, hsl(260 30% 15%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(260 25% 12%), hsl(260 20% 10%));
+    
+    /* Glows and Shadows */
+    --glow-primary: 0 0 40px hsl(271 91% 65% / 0.3);
+    --glow-accent: 0 0 30px hsl(198 93% 60% / 0.2);
+    --shadow-elevated: 0 20px 40px -10px hsl(260 30% 5% / 0.8);
+    --shadow-soft: 0 8px 25px -5px hsl(260 30% 5% / 0.4);
+    
+    /* Animation Variables */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +125,72 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    background: var(--gradient-hero);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent;
+  }
+  
+  .glow-box {
+    box-shadow: var(--glow-primary);
+  }
+  
+  .card-gradient {
+    background: var(--gradient-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsl(var(--border));
+  }
+  
+  .hover-scale {
+    transition: var(--transition-smooth);
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-elevated);
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
   }
 }
