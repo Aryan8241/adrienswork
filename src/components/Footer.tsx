@@ -42,7 +42,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="mailto:contact@aryandasgupta.com"
+                href="mailto:aryandasgupta07feb@gmail.com"
                 className="p-2 rounded-lg bg-muted/30 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all duration-300 group"
               >
                 <Mail className="h-5 w-5 group-hover:scale-110 transition-transform" />

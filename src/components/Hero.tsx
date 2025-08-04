@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Download } from "lucide-react";
-import aryanProfile from "@/assets/aryan-profile.jpg";
+import aryanProfile from "@/assets/aryan-hero-photo.jpg";
 
 const Hero = () => {
   const scrollToAbout = () => {

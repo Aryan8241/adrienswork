@@ -18,7 +18,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "contact@aryandasgupta.com",
+      value: "aryandasgupta07feb@gmail.com",
       description: "Primary contact for all inquiries"
     },
     {
@@ -38,7 +38,7 @@ const Contact = () => {
   const socialLinks = [
     { icon: Linkedin, name: "LinkedIn", url: "#", color: "hover:text-blue-400" },
     { icon: Github, name: "GitHub", url: "#", color: "hover:text-gray-300" },
-    { icon: Mail, name: "Email", url: "mailto:contact@aryandasgupta.com", color: "hover:text-primary" }
+    { icon: Mail, name: "Email", url: "mailto:aryandasgupta07feb@gmail.com", color: "hover:text-primary" }
   ];
 
   const services = [
